@@ -16,11 +16,11 @@ ASOs are tiled across the target window and pushed through the full funnel.
 
 | Funnel stage | Demo evidence |
 |---|---|
-| Tissue-weighted penalty | `ESSGENE` exonic off-target is the top liability (penalty ≈ 10.6, TPM 55.3, essential ×3.4) |
+| Tissue-weighted penalty | `ESSGENE` exonic off-target is the top liability (penalty ≈ 10.6, TPM 55.3, essential ×3.45) |
 | Tissue zeroing | `SILENTGENE` (TPM 0 in muscle) contributes exactly 0 — `log2(0+1)=0` |
 | Pre-mRNA / intron search | `INTRONGENE` **intronic** off-target overlaps a PTBP1 CLIP peak → collision liability |
 | Intended-vs-unintended CLIP | on-target overlaps a `HNRNPA1` mechanistic silencer → asset, not a liability |
-| Sequence-intrinsic tox | G-quadruplex / CpG candidates are excluded even at zero off-target penalty |
+| Sequence-intrinsic tox | G-quadruplex candidates are **excluded** even at zero off-target penalty; CpG candidates are **flagged for chemistry-redesign** (not excluded) |
 | Multi-objective arbitration | a Pareto front (not a single scalar) of clean, mechanism-engaging 15-mers |
 
 Expected top-line summary: `261 candidates, ~84 excluded, ~132 intended-mechanism,

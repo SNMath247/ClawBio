@@ -143,11 +143,14 @@ def tile_candidates(mutant: str, window: dict, length_min: int, length_max: int,
 # --------------------------------------------------------------------------- #
 
 def p_bind(length: int, mismatches: int, gc: float) -> float:
-    """Thermodynamic binding proxy in [0, 1].
+    """Heuristic binding-likelihood score in [0, 1] (NOT a thermodynamic ΔG).
 
     Monotonically DECREASING in mismatch count and INCREASING in GC content.
     identity**3 gives a steep-but-nonzero falloff so 1-3 mismatches still bind
-    at reduced likelihood (consistent with observed RNase H1 off-target tail).
+    at reduced likelihood. This is a coarse ranking proxy only: it is blind to
+    mismatch position/identity and has no nearest-neighbour term, so it is not
+    a ΔΔG°37 calculation. A real thermodynamic model (OligoWalk/RIsearch2) is
+    the production swap-in.
     """
     if length <= 0:
         return 0.0

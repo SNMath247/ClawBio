@@ -155,7 +155,7 @@ python clawbio.py run aso-screen --input spec.json --output <dir>
 python clawbio.py run aso-screen --demo
 ```
 
-Expected output: a report over **261** tiled 15-20mers against a synthetic muscle (`Muscle_Skeletal`) cryptic-exon target. It flags an ESSGENE exonic off-target as the top weighted liability, **zeroes** a silent-in-muscle off-target (`log2(0+1)=0`), catches an intronic PTBP1 CLIP collision, excludes G-quadruplex/CpG candidates, and surfaces a Pareto front of clean 15-mers that engage the intended mechanistic silencer.
+Expected output: a report over **261** tiled 15-20mers against a synthetic muscle (`Muscle_Skeletal`) cryptic-exon target. It flags an ESSGENE exonic off-target as the top weighted liability, **zeroes** a silent-in-muscle off-target (`log2(0+1)=0`), catches an intronic PTBP1 CLIP collision, **excludes** G-quadruplex candidates and **flags CpG** candidates for chemistry-redesign, and surfaces a Pareto front of clean 15-mers that engage the intended mechanistic silencer.
 
 ## Algorithm / Methodology
 
@@ -163,7 +163,7 @@ An agent can apply this without the script:
 
 1. **Mutant transcript** = baseline pre-mRNA with the SNV applied (single-base, `ref` must match).
 2. **Tiling**: for each length L∈[15,20], for each offset in the window, `ASO = reverse_complement(mutant[offset:offset+L])`; the ASO's genomic footprint is colinear with the pre-mRNA.
-3. **P(bind)** = `identity³ · (0.5 + 0.5·GC)` where `identity = (L − mismatches)/L`. Monotonically decreasing in mismatches, increasing in GC (a thermodynamic proxy for ΔΔG°37 ranking).
+3. **P(bind)** = `identity³ · (0.5 + 0.5·GC)` where `identity = (L − mismatches)/L`. A **heuristic** binding-likelihood score — monotone in fractional identity and bulk GC — **not** a thermodynamic ΔG calculation (it is blind to mismatch position and identity and has no nearest-neighbour term). Position-aware nearest-neighbour thermodynamics (a real ΔΔG°37 model, e.g. OligoWalk/RIsearch2) is the production swap-in.
 4. **E(essentiality)** = `1 + max(0,−Chronos) + max(0, 0.6−LOEUF)/0.6`. A neutral gene returns exactly 1.0; essential/constrained genes multiply the penalty.
 5. **Off-target penalty** = `Σ_i P(bind_i)·log2(TPM_tissue,i + 1)·E_i` over off-target hits (the intended on-target is scored separately).
 6. **CLIP**: half-open genomic-interval intersect, strand-matched; IDR peaks weight 1.0, relaxed 0.5. An on-target overlap with a `mechanistic_silencer` peak is an **asset**, not a liability.
@@ -172,7 +172,7 @@ An agent can apply this without the script:
 **Key thresholds / parameters**:
 - Gapmer off-target mismatch ceiling: ≤3 (source: Kamola et al., NAR 2015 — validated exonic + intronic off-targets at 2–3 mismatches).
 - "Not expressed" TPM: <1 (field convention); exactly 0 → penalty contribution 0.
-- LOEUF loss-of-function-intolerant regime: <0.6 (gnomAD v4).
+- LOEUF loss-of-function-intolerant regime: <0.6 (the gnomAD **v4** recommendation; the v2.1.1 methods paper used <0.35).
 - DepMap common-essential proxy: Chronos ≤ −0.5.
 - Hepatotoxic trinucleotides: TGC / TCC (source: Burdick et al., NAR 2014). CpG→TLR9 (Bauer 2001). G-quadruplex: ≥4 consecutive G.
 
@@ -272,4 +272,5 @@ The agent (LLM) dispatches, explains trade-offs, and recommends next steps. The 
 - [Burdick et al., NAR 2014](https://academic.oup.com/nar/article/42/8/4882/2408845); TGC/TCC hepatotoxicity trinucleotides.
 - [Shen et al., Nat Biotechnol 2019](https://www.nature.com/articles/s41587-019-0106-2); hybridization-independent gapmer protein-binding toxicity (P54nrb/NONO).
 - [Dempster et al., Genome Biol 2021](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02540-7); DepMap Chronos gene-effect scoring.
-- [Karczewski et al., Nature 2020 (gnomAD)](https://www.nature.com/articles/s41586-020-2308-7); LOEUF loss-of-function constraint.
+- [Karczewski et al., Nature 2020 (gnomAD v2.1.1)](https://www.nature.com/articles/s41586-020-2308-7); LOEUF loss-of-function constraint methodology (recommended cutoff <0.35).
+- [Chen et al., Nature 2024 (gnomAD v4.0)](https://www.nature.com/articles/s41586-023-06045-0); updated genomic constraint map (76,156 genomes) — source of the LOEUF <0.6 v4 recommendation used here.
