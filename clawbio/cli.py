@@ -1203,6 +1203,13 @@ SKILLS = {
         "no_input_required": True,
         "accepts_genotypes": False,
     },
+    "aso-screen": {
+        "script": SKILLS_DIR / "aso-off-target-screening" / "aso_off_target_screening.py",
+        "demo_args": ["--demo"],
+        "description": "ASO off-target & toxicity screening (tissue-weighted penalty + CLIP collision + sequence-intrinsic tox + Pareto front)",
+        "allowed_extra_flags": {"--tissue", "--modality", "--max-mismatch"},
+        "accepts_genotypes": False,
+    },
 }
 
 try:

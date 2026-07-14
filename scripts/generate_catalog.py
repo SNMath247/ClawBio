@@ -335,6 +335,7 @@ MVP_FOLDERS = {
     "llm-biobank-bench",
     "analyze-fasta",
     "phylogenetics-builder",
+    "aso-off-target-screening",
 }
 
 # Known trigger keywords for orchestrator routing
@@ -369,6 +370,7 @@ TRIGGER_KEYWORDS: dict[str, list[str]] = {
     "marker-dominance-mapper": ["marker dominance", "map marker spots", "marker-based tissue regions", "tumor core", "immune edge"],
     "analyze-fasta": ["fasta", "analyze fasta", "gc content", "find orfs", "isoelectric point", "gravy index", "protein properties"],
     "phylogenetics-builder": ["phylogeny", "phylogenetic tree", "iqtree", "maximum likelihood tree", "fasta alignment"],
+    "aso-off-target-screening": ["ASO off-target screening", "antisense oligonucleotide off-target", "splice-switching ASO design", "ASO toxicity screen", "gapmer off-target", "weighted off-target score"],
 }
 
 # Known chaining partners
@@ -403,6 +405,7 @@ CHAINING: dict[str, list[str]] = {
     "marker-dominance-mapper": ["scrna-orchestrator", "diff-visualizer"],
     "analyze-fasta": ["struct-predictor", "variant-annotation", "pubmed-summariser"],
     "phylogenetics-builder": ["profile-report"],
+    "aso-off-target-screening": ["variant-annotation", "gi-splice", "omics-target-evidence-mapper", "target-validation-scorer", "struct-predictor"],
 }
 
 

@@ -92,10 +92,11 @@ When the user asks a question, match it to a skill and act:
 | Phylogenetic tree from FASTA, maximum-likelihood tree, IQ-TREE 2, model selection, evolutionary distance, branch support, proportional phylogram | `skills/phylogenetics-builder/` | Run `phylogenetics_builder.py` |
 | Genomic interval operations, interval overlap, nearest interval, merge/coverage intervals, BED intersect, bioframe alternative, interval arithmetic, complement/subtract intervals, count overlaps, BigWig/BigBed, DataFusion SQL on genomic files, genomic pileup depth, polars-bio | `skills/polars-bio/` | Run `polars_bio_runner.py` |
 | Ancestry-stratified disease risk, population-specific variant risk, South Asian diabetes risk, East Asian KCNQ1, African kidney disease APOL1, ancestry elevation score, which diseases am I at risk for given my ancestry, ancestry-aware variant risk, genetic super-population disease risk | `skills/ancestry-risk-profiler/` | Run `ancestry_risk_profiler.py` |
+| ASO off-target screening, antisense oligonucleotide off-target, splice-switching ASO design, gapmer off-target, weighted off-target score, ASO toxicity/CpG/G-quadruplex/CLIP-collision liabilities, tile 15-20mers and rank | `skills/aso-off-target-screening/` | Run `aso_off_target_screening.py` |
 
 ## How to Use a Skill
 
-### Skills with Python scripts (pharmgx-reporter, equity-scorer, nutrigx, claw-metagenomics, genome-compare, bio-orchestrator, variant-annotation, bioconductor-bridge, clinical-trial-finder, data-extractor, illumina-bridge, pubmed-summariser, omics-target-evidence-mapper, target-validation-scorer, nfcore-scrnaseq-wrapper, nfcore-rnaseq-wrapper, nfcore-sarek-wrapper, scrna-orchestrator, scrna-embedding, diff-visualizer, proteomics-de, struct-predictor, clinical-variant-reporter, multiqc-reporter, labstep, clinpgx, gwas-prs, gwas-lookup, methylation-clock, profile-report, ukb-navigator, galaxy-bridge, flow-bio, rnaseq-de, protocols-io, soul2dna, genome-match, recombinator, fine-mapping, cell-detection, wes-clinical-report-en, wes-clinical-report-es, proteomics-clock, sample-qc-triage, crispr-screen-triage, marker-dominance-mapper, busco-assessor, fastreer, polars-bio, ancestry-risk-profiler)
+### Skills with Python scripts (pharmgx-reporter, equity-scorer, nutrigx, claw-metagenomics, genome-compare, bio-orchestrator, variant-annotation, bioconductor-bridge, clinical-trial-finder, data-extractor, illumina-bridge, pubmed-summariser, omics-target-evidence-mapper, target-validation-scorer, nfcore-scrnaseq-wrapper, nfcore-rnaseq-wrapper, nfcore-sarek-wrapper, scrna-orchestrator, scrna-embedding, diff-visualizer, proteomics-de, struct-predictor, clinical-variant-reporter, multiqc-reporter, labstep, clinpgx, gwas-prs, gwas-lookup, methylation-clock, profile-report, ukb-navigator, galaxy-bridge, flow-bio, rnaseq-de, protocols-io, soul2dna, genome-match, recombinator, fine-mapping, cell-detection, wes-clinical-report-en, wes-clinical-report-es, proteomics-clock, sample-qc-triage, crispr-screen-triage, marker-dominance-mapper, busco-assessor, fastreer, polars-bio, ancestry-risk-profiler, aso-off-target-screening)
 1. Read the skill's `SKILL.md` for domain context
 2. Run the Python script with correct CLI arguments (see below)
 3. Show the user the output — open any generated figures and explain results
@@ -353,6 +354,14 @@ python skills/polars-bio/polars_bio_runner.py io --input s.vcf --format vcf --de
 python skills/polars-bio/polars_bio_runner.py sql --input s.vcf --query "SELECT chrom,start FROM t" --output <report_dir>
 python skills/polars-bio/polars_bio_runner.py pileup --input aln.bam --min-mapping-quality 20 --output <report_dir>
 python skills/polars-bio/polars_bio_runner.py --demo --output /tmp/polars_bio_demo
+
+# ASO off-target & toxicity screening — multi-stage funnel + weighted penalty + Pareto front
+python skills/aso-off-target-screening/aso_off_target_screening.py \
+  --input <target_spec.json> --output <report_dir>
+python skills/aso-off-target-screening/aso_off_target_screening.py \
+  --input <target_spec.json> --tissue Brain_Cortex --modality steric-blocker --output <report_dir>
+python skills/aso-off-target-screening/aso_off_target_screening.py --demo --output /tmp/aso_demo
+python clawbio.py run aso-screen --demo --output /tmp/aso_demo
 ```
 
 ## Demo Data
@@ -410,6 +419,7 @@ For instant demos when the user has no data:
 | scRNA-seq demo (upstream nf-core/scrnaseq `-profile test` dataset, no local files) | `--demo` flag | nfcore-scrnaseq-wrapper |
 | Phylogenetics Builder demo FASTA (5 synthetic sequences, 50 bp) | `skills/phylogenetics-builder/demo_alignment.fasta` | phylogenetics-builder |
 | Ancestry risk demo patient (synthetic South Asian 23andMe, ~80 SNPs, T2D/CAD/hypertension risk alleles) | `--demo` flag | ancestry-risk-profiler |
+| ASO screening demo (synthetic muscle cryptic-exon target + bundled off-target atlas/GTEx TPM/CLIP peaks/DepMap+LOEUF, 261 tiled 15-20mers) | `--demo` flag / `skills/aso-off-target-screening/demo_target.json` | aso-off-target-screening |
 
 ### Demo Commands
 
@@ -542,6 +552,9 @@ python skills/phylogenetics-builder/phylogenetics_builder.py --demo --output /tm
 
 # Ancestry-Aware Disease Risk Profiler demo (South Asian synthetic patient)
 python skills/ancestry-risk-profiler/ancestry_risk_profiler.py --demo --output /tmp/ancestry_risk_demo
+
+# ASO off-target & toxicity screening demo (synthetic muscle cryptic-exon target)
+python skills/aso-off-target-screening/aso_off_target_screening.py --demo --output /tmp/aso_demo
 
 # Ancestry risk profiler — infer ancestry + lifetime disease risk %
 python skills/ancestry-risk-profiler/ancestry_risk_profiler.py \

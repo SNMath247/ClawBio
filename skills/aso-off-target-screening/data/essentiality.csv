@@ -1,0 +1,6 @@
+gene,chronos,loeuf,common_essential
+SYNTGT,0.02,0.95,false
+ESSGENE,-1.62,0.1,true
+SILENTGENE,0.08,1.3,false
+INTRONGENE,-0.15,0.75,false
+DECOYGENE,0.05,1.1,false

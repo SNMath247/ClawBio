@@ -1,0 +1,21 @@
+{
+  "target_id": "SYN-CRYPTIC-01",
+  "gene": "SYNTGT",
+  "tissue": "Muscle_Skeletal",
+  "modality": "gapmer",
+  "aso_length_min": 15,
+  "aso_length_max": 20,
+  "chrom": "synchr1",
+  "strand": "+",
+  "pre_mrna_genomic_start": 1000,
+  "pre_mrna": "AAGAGCTAACAGAACACTCGCTCTGGATGGGGATATAAAGCCAACAGGGCTCTAGGATAATGCCTATAGGCCGTGCTTTCTAGCCCCCCCCGGTACGGGAGGTACAGGTTAACAGGCCGC",
+  "variant": {
+    "pos": 60,
+    "ref": "T",
+    "alt": "A"
+  },
+  "target_window": {
+    "start": 40,
+    "end": 100
+  }
+}

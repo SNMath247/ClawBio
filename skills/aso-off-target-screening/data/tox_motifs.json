@@ -1,0 +1,51 @@
+{
+  "description": "Sequence-intrinsic ASO toxicity/immunogenicity motif rules (DNA representation).",
+  "rules": [
+    {
+      "id": "cpg_tlr9",
+      "patterns": [
+        "CG"
+      ],
+      "weight": 1.0,
+      "severity": "flag",
+      "mechanism": "Unmethylated CpG -> TLR9 innate immune activation",
+      "mitigation": "Use 5-methylcytosine at CpG; 2'-MOE/2'-OMe near CpG",
+      "source": "Bauer 2001 PNAS; Yamada 2024 Sci Rep"
+    },
+    {
+      "id": "g_quadruplex",
+      "patterns": [
+        "GGGG"
+      ],
+      "weight": 1.5,
+      "severity": "exclude",
+      "mechanism": "G-quadruplex (>=4 consecutive G) -> aggregation/off-target protein binding",
+      "mitigation": "Redesign to break the G-run",
+      "source": "ASO design best practice"
+    },
+    {
+      "id": "hepatotoxic_trinuc",
+      "patterns": [
+        "TCC",
+        "TGC"
+      ],
+      "weight": 0.5,
+      "severity": "flag",
+      "mechanism": "Hepatotoxicity-associated trinucleotides in LNA gapmers",
+      "mitigation": "Chemistry: 2'-OMe / MOP at gap position 2 or 3",
+      "source": "Burdick 2014 NAR"
+    },
+    {
+      "id": "gu_rich_tlr78",
+      "patterns": [
+        "TGTGT",
+        "GTCCTTCAA"
+      ],
+      "weight": 0.75,
+      "severity": "flag",
+      "mechanism": "GU/U-rich -> TLR7/8 (chiefly siRNA-relevant)",
+      "mitigation": "2'-OMe uridines abrogate TLR7/8 sensing",
+      "source": "Judge 2005 Nat Biotechnol; Hornung 2005 Nat Med"
+    }
+  ]
+}

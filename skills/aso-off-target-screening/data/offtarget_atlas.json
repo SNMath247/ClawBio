@@ -1,0 +1,41 @@
+{
+  "description": "Synthetic pre-mRNA off-target atlas (includes introns). Not real sequence.",
+  "transcripts": [
+    {
+      "transcript_id": "OT_ESSGENE_1",
+      "gene": "ESSGENE",
+      "chrom": "synchr2",
+      "strand": "+",
+      "genomic_start": 5000,
+      "region": "exon",
+      "sequence": "GATGCCAGGGCCACGCGTACAATGAAGTAAAGGACTCTAGGGTAAAGCATAAGTCGAAAGGGTTCCATTGCGGGTTATCTAATGGTTCAA"
+    },
+    {
+      "transcript_id": "OT_SILENTGENE_1",
+      "gene": "SILENTGENE",
+      "chrom": "synchr3",
+      "strand": "+",
+      "genomic_start": 8000,
+      "region": "exon",
+      "sequence": "CTCGGCGGGCTGTCCCTAGTTCCCGTGCTTACTAGCCCCCAGGGCCCATGATTTTAGAGGAGCTTAGCTCCACATCCTCT"
+    },
+    {
+      "transcript_id": "OT_INTRONGENE_1",
+      "gene": "INTRONGENE",
+      "chrom": "synchr4",
+      "strand": "+",
+      "genomic_start": 3000,
+      "region": "intron",
+      "sequence": "AGCAGGCGATAGAGCCTCAGGCGCGGCCTATGTATTTGATTCGTGATAAAGCCTATAGGCCGGCCTATCAAAGGACCAGGTTAATGCGTCAAGTATATGGAGCACTTCAGATATCCTTTG"
+    },
+    {
+      "transcript_id": "OT_DECOYGENE_1",
+      "gene": "DECOYGENE",
+      "chrom": "synchr5",
+      "strand": "+",
+      "genomic_start": 9000,
+      "region": "exon",
+      "sequence": "AACAAGGGCTGAATACGCCCAAGGGTCGAGAATGAAGCTCTGCGTAAACGAGTGCCCGGAGCAACACATT"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+chrom,start,end,strand,rbp,cell_line,idr,mechanistic_silencer
+synchr1,1042,1062,+,HNRNPA1,SH-SY5Y,true,true
+synchr4,3042,3064,+,PTBP1,K562,true,false
+synchr9,100,140,+,TARDBP,SH-SY5Y,false,false

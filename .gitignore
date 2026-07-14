@@ -30,6 +30,12 @@ data/
 !skills/cnv-acmg-classifier/data/
 !skills/cnv-acmg-classifier/data/curated_dosage_map.csv
 !skills/cnv-acmg-classifier/data/curated_gene_model.csv
+!skills/aso-off-target-screening/data/
+!skills/aso-off-target-screening/data/clip_peaks.csv
+!skills/aso-off-target-screening/data/essentiality.csv
+!skills/aso-off-target-screening/data/gtex_median_tpm.csv
+!skills/aso-off-target-screening/data/offtarget_atlas.json
+!skills/aso-off-target-screening/data/tox_motifs.json
 skills/proteomics-de/output_diann_test/
 skills/proteomics-de/output_maxquant_test/
 .venv/
