@@ -58,6 +58,7 @@ When the user asks a question, match it to a skill and act:
 | Semantic similarity, disease neglect, research gaps, NTDs, SII | `skills/claw-semantic-sim/` | Read SKILL.md, apply methodology |
 | Metagenomics, microbiome profiling, Kraken2, HUMAnN3, resistome, shotgun metagenomics | `skills/claw-metagenomics/` | Run `metagenomics_profiler.py` |
 | Genome comparison, IBS, "how much DNA in common", George Church, Corpasome, pairwise | `skills/genome-compare/` | Run `genome_compare.py` |
+| HPO terms, phenotype-driven diagnosis, rare disease differential, candidate gene ranking from phenotype, "what could these HP: terms be", undiagnosed case, which feature is most discriminating | `skills/hpo-differential/` | Run `hpo_differential.py` |
 | Route a query, multi-step analysis, "what skill should I use" | `skills/bio-orchestrator/` | Run `orchestrator.py` |
 | Variant annotation, VEP, ClinVar, gnomAD | `skills/variant-annotation/` | Run `variant_annotation.py` |
 | Promoter prediction, TSS prediction, find promoter, score promoter activity, GENA-LM promoter, G0 promoter | `skills/gi-promoter/` | Run `gi_promoter.py` |
@@ -121,7 +122,7 @@ When the user asks a question, match it to a skill and act:
 
 ## How to Use a Skill
 
-### Skills with Python scripts (pharmgx-reporter, equity-scorer, nutrigx, claw-metagenomics, genome-compare, bio-orchestrator, variant-annotation, bioconductor-bridge, clinical-trial-finder, data-extractor, illumina-bridge, pubmed-summariser, omics-target-evidence-mapper, target-validation-scorer, nfcore-scrnaseq-wrapper, nfcore-rnaseq-wrapper, nfcore-sarek-wrapper, scrna-orchestrator, scrna-embedding, diff-visualizer, proteomics-de, struct-predictor, clinical-variant-reporter, multiqc-reporter, labstep, clinpgx, gwas-prs, just-prs-mcp, gwas-lookup, methylation-clock, profile-report, ukb-navigator, galaxy-bridge, flow-bio, rnaseq-de, protocols-io, soul2dna, genome-match, recombinator, fine-mapping, cell-detection, wes-clinical-report-en, wes-clinical-report-es, proteomics-clock, sample-qc-triage, crispr-screen-triage, marker-dominance-mapper, busco-assessor, fastreer, polars-bio, ancestry-risk-profiler)
+### Skills with Python scripts (hpo-differential, pharmgx-reporter, equity-scorer, nutrigx, claw-metagenomics, genome-compare, bio-orchestrator, variant-annotation, bioconductor-bridge, clinical-trial-finder, data-extractor, illumina-bridge, pubmed-summariser, omics-target-evidence-mapper, target-validation-scorer, nfcore-scrnaseq-wrapper, nfcore-rnaseq-wrapper, nfcore-sarek-wrapper, scrna-orchestrator, scrna-embedding, diff-visualizer, proteomics-de, struct-predictor, clinical-variant-reporter, multiqc-reporter, labstep, clinpgx, gwas-prs, just-prs-mcp, gwas-lookup, methylation-clock, profile-report, ukb-navigator, galaxy-bridge, flow-bio, rnaseq-de, protocols-io, soul2dna, genome-match, recombinator, fine-mapping, cell-detection, wes-clinical-report-en, wes-clinical-report-es, proteomics-clock, sample-qc-triage, crispr-screen-triage, marker-dominance-mapper, busco-assessor, fastreer, polars-bio, ancestry-risk-profiler)
 1. Read the skill's `SKILL.md` for domain context
 2. Run the Python script with correct CLI arguments (see below)
 3. Show the user the output — open any generated figures and explain results
@@ -227,6 +228,14 @@ python skills/flow-bio/flow_bio.py --search "RNA-seq" --output <report_dir>
 python skills/flow-bio/flow_bio.py --upload-sample \
   --name <sample_name> --sample-type <type> \
   --reads1 <R1.fastq.gz> [--reads2 <R2.fastq.gz>] --output <report_dir>
+
+# HPO Differential — phenotype-driven disease/gene ranking (fully offline)
+# Requires the hpo extra:  pip install 'clawbio[hpo]'   (or: uv run --extra hpo ...)
+python skills/hpo-differential/hpo_differential.py \
+  --terms "HP:0001263,HP:0000252,HP:0002170" --output <report_dir>
+python skills/hpo-differential/hpo_differential.py \
+  --terms-file <hpo_terms.txt> --output <report_dir> --top 25
+python skills/hpo-differential/hpo_differential.py --demo --output /tmp/hpo_diff_demo
 
 # Bio orchestrator — auto-routes to the right skill
 python skills/bio-orchestrator/orchestrator.py \
@@ -401,6 +410,7 @@ For instant demos when the user has no data:
 | Population map | `examples/demo_population_map.csv` | equity-scorer |
 | Ancestry CSV (30 samples) | `examples/sample_ancestry.csv` | equity-scorer |
 | Pre-built equity report | `examples/demo_report/` | Reference output |
+| HPO differential demo (synthetic 6-term ciliopathy vignette) | `skills/hpo-differential/examples/demo_terms.txt` | hpo-differential |
 | Manuel Corpas 23andMe (gzipped) | `skills/genome-compare/data/manuel_corpas_23andme.txt.gz` | genome-compare |
 | George Church 23andMe (gzipped) | `skills/genome-compare/data/george_church_23andme.txt.gz` | genome-compare (reference) |
 | ClinPGx demo (CYP2D6, live API) | `--demo` flag | clinpgx |
@@ -505,6 +515,9 @@ python skills/galaxy-bridge/galaxy_bridge.py --demo
 
 # Galaxy tool search
 python skills/galaxy-bridge/galaxy_bridge.py --search "metagenomics"
+
+# HPO differential demo (synthetic phenotype set)
+python skills/hpo-differential/hpo_differential.py --demo --output /tmp/hpo_diff_demo
 
 # List all available skills
 python skills/bio-orchestrator/orchestrator.py --list-skills

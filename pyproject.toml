@@ -63,6 +63,9 @@ just-prs = [
     "fastmcp>=3.4.4,<4",
     "typer>=0.27,<1",
 ]
+# hpo-differential: bundles the HPO ontology + phenotype.hpoa + genes_to_phenotype,
+# so the skill runs fully offline. ~60 MB of data, hence an extra rather than a core dep.
+hpo = ["pyhpo>=4,<5"]
 
 [project.scripts]
 clawbio = "clawbio.cli:main"

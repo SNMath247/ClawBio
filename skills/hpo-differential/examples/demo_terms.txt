@@ -1,0 +1,8 @@
+# Synthetic demo phenotype set - NEVER real patient data.
+# A textbook ciliopathy-flavoured vignette, used by --demo.
+HP:0000510 Rod-cone dystrophy
+HP:0001263 Global developmental delay
+HP:0001829 Postaxial polydactyly
+HP:0000135 Hypogonadism
+HP:0001513 Obesity
+HP:0000105 Enlarged kidney

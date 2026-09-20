@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated_by": "scripts/generate_catalog.py",
-  "skill_count": 95,
+  "skill_count": 96,
   "galaxy_tool_count": 8182,
   "skills": [
     {
@@ -2100,6 +2100,42 @@
         "typing",
         "from"
       ],
+      "chaining_partners": []
+    },
+    {
+      "name": "hpo-differential",
+      "cli_alias": null,
+      "description": "Rank OMIM diseases, Orphanet diseases and disease-associated genes against a list of HPO phenotype terms, fully offline, using information-content-weighted Resnik semantic similarity plus a discriminating-feature analysis that does not depend on the score.",
+      "version": "0.1.0",
+      "status": "planned",
+      "maturity_tier": "tested",
+      "maturity_evidence": {
+        "has_skill_md": true,
+        "has_script": true,
+        "has_tests": true,
+        "has_demo": true,
+        "cli_registered": false,
+        "ci_tested": false,
+        "benchmark_validated": false
+      },
+      "has_script": true,
+      "has_tests": true,
+      "has_demo": true,
+      "demo_command": "python skills/hpo-differential/hpo_differential.py --demo",
+      "dependencies": [
+        "python>=3.10",
+        "pyhpo>=4,<5"
+      ],
+      "tags": [
+        "hpo",
+        "phenotype",
+        "rare-disease",
+        "differential-diagnosis",
+        "semantic-similarity",
+        "resnik",
+        "offline"
+      ],
+      "trigger_keywords": [],
       "chaining_partners": []
     },
     {
